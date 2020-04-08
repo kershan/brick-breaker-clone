@@ -20,6 +20,10 @@ window.onload = function () {
 function setNewScreen() {
     paddleX = canvas.width / 2 - (paddleWidth / 2);
     paddleY = canvas.height - 20;
+    clearScreen();
+}
+
+function clearScreen() {
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
@@ -32,20 +36,27 @@ function keyDownEvent(event) {
     switch(event.keyCode) {
         case 37: {
             //Left
+            paddleX-=10;
+            break;
         }
         case 38: {
             //Up
+            break;
         }
         case 39: {
             //Right
+            paddleX+=10;
+            break;
         }
         case 40: {
             //Down
+            break;
         }
     }
 }
 
 function gameUpdate() {
+    clearScreen();
     drawPaddle();
     requestAnimationFrame(gameUpdate);
 }
