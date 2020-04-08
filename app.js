@@ -8,6 +8,13 @@ var paddleWidth = 80;
 var paddleX;
 var paddleY;
 
+//Ball
+const ballSpeed = 10;
+var ballWidth = 20;
+var ballHeight = 20;
+var ballX;
+var ballY;
+
 window.onload = function () {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
@@ -20,8 +27,14 @@ window.onload = function () {
 }
 
 function setNewScreen() {
+    //Paddle start position
     paddleX = canvas.width / 2 - (paddleWidth / 2);
     paddleY = canvas.height - paddleHeight;
+
+    //Ball start position
+    ballX = canvas.width / 2 - (ballWidth / 2);
+    ballY = canvas.height - ballHeight - paddleHeight;
+
     clearScreen();
 }
 
@@ -66,11 +79,17 @@ function keyDownEvent(event) {
 function gameUpdate() {
     clearScreen();
     drawPaddle();
+    drawBall();
     requestAnimationFrame(gameUpdate);
 }
 
 function drawPaddle() {
     ctx.fillStyle = 'green';
     ctx.fillRect(paddleX, paddleY, paddleWidth, paddleHeight);
+}
+
+function drawBall() {
+    ctx.fillStyle = 'red';
+    ctx.fillRect(ballX, ballY, ballWidth, ballHeight);
 }
 
