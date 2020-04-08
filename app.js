@@ -2,6 +2,7 @@ var canvas;
 var ctx;
 
 //Paddle
+const paddleSpeed = 10;
 var paddleWidth = 80;
 var paddleX;
 var paddleY;
@@ -39,7 +40,7 @@ function keyDownEvent(event) {
             if (paddleX <= 0)
                 return;
 
-            paddleX -= 10;
+            paddleX -= paddleSpeed;
             break;
         }
         case 38: {
@@ -51,7 +52,7 @@ function keyDownEvent(event) {
             if (paddleX >= canvas.width)
                 return;
 
-            paddleX += 10;
+            paddleX += paddleSpeed;
             break;
         }
         case 40: {
