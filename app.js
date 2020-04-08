@@ -21,7 +21,7 @@ window.onload = function () {
 
 function setNewScreen() {
     paddleX = canvas.width / 2 - (paddleWidth / 2);
-    paddleY = canvas.height - 20;
+    paddleY = canvas.height - paddleHeight;
     clearScreen();
 }
 
