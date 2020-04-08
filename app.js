@@ -3,6 +3,7 @@ var ctx;
 
 //Paddle
 const paddleSpeed = 10;
+const paddleHeight = 20;
 var paddleWidth = 80;
 var paddleX;
 var paddleY;
@@ -70,6 +71,6 @@ function gameUpdate() {
 
 function drawPaddle() {
     ctx.fillStyle = 'green';
-    ctx.fillRect(paddleX, paddleY, paddleWidth, 20);
+    ctx.fillRect(paddleX, paddleY, paddleWidth, paddleHeight);
 }
 
