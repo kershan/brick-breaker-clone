@@ -33,10 +33,13 @@ function keyDownEvent(event) {
         return;
     }
 
-    switch(event.keyCode) {
+    switch (event.keyCode) {
         case 37: {
             //Left
-            paddleX-=10;
+            if (paddleX <= 0)
+                return;
+
+            paddleX -= 10;
             break;
         }
         case 38: {
@@ -45,7 +48,10 @@ function keyDownEvent(event) {
         }
         case 39: {
             //Right
-            paddleX+=10;
+            if (paddleX >= canvas.width)
+                return;
+
+            paddleX += 10;
             break;
         }
         case 40: {
