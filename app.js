@@ -19,6 +19,7 @@ var ballRangeLimitX;
 var ballRangeLimitY;
 var ballX;
 var ballY;
+var ballPaddleDirectionX = true;
 
 window.onload = function () {
     canvas = document.getElementById('canvas');
@@ -100,7 +101,11 @@ function drawBall() {
     updateBallDirectionForPaddle();
     updateBallDirectionForEdgeOfScreen();
 
-    ballX += ballSpeedX;
+    if (ballPaddleDirectionX)
+        ballX += ballSpeedX;
+    else
+        ballX -= ballSpeedX;
+
     ballY += ballSpeedY;
     ctx.fillStyle = 'red';
     ctx.fillRect(ballX, ballY, ballWidth, ballHeight);
@@ -114,6 +119,8 @@ function updateBallDirectionForPaddle() {
             && ballX <= paddleRightEdge) {
             ballSpeedX *= -1;
             ballSpeedY *= -1;
+
+            ballPaddleDirectionX = !ballPaddleDirectionX
         }
     }
 }
