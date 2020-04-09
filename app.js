@@ -9,7 +9,9 @@ var paddleX;
 var paddleY;
 
 //Ball
-const ballSpeed = 10;
+const ballSpeed = 1;
+var ballSpeedX = -ballSpeed;
+var ballSpeedY = -ballSpeed;
 var ballWidth = 20;
 var ballHeight = 20;
 var ballX;
@@ -89,6 +91,8 @@ function drawPaddle() {
 }
 
 function drawBall() {
+    ballX += ballSpeedX;
+    ballY += ballSpeedY;
     ctx.fillStyle = 'red';
     ctx.fillRect(ballX, ballY, ballWidth, ballHeight);
 }
