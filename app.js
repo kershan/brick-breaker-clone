@@ -10,6 +10,7 @@ var paddleY;
 
 //Ball
 const ballSpeed = 1;
+const ballStartOffset = 1;
 var ballSpeedX = -ballSpeed;
 var ballSpeedY = -ballSpeed;
 var ballWidth = 20;
@@ -40,7 +41,7 @@ function setNewScreen() {
 
     //Ball start position
     ballX = canvas.width / 2 - (ballWidth / 2);
-    ballY = canvas.height - ballHeight - paddleHeight;
+    ballY = canvas.height - ballHeight - paddleHeight - ballStartOffset;
 
     clearScreen();
 }
