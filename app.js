@@ -98,25 +98,26 @@ function drawPaddle() {
 function drawBall() {
 
     //Left
-    if (ballX <= 0)
-        ballSpeedX *= -1;
-
-    //Top
-    if (ballY <= 0)
-        ballSpeedY *= -1;
-
-    //Right
-    if (ballX >= ballRangeLimitX)
-        ballSpeedX *= -1;
-
-    //Bottom
-    if (ballY >= ballRangeLimitY)
-        ballSpeedY *= -1;
+    updateBallDirectionForEdgeOfScreen();
 
 
     ballX += ballSpeedX;
     ballY += ballSpeedY;
     ctx.fillStyle = 'red';
     ctx.fillRect(ballX, ballY, ballWidth, ballHeight);
+}
+
+function updateBallDirectionForEdgeOfScreen() {
+    if (ballX <= 0)
+        ballSpeedX *= -1;
+    //Top
+    if (ballY <= 0)
+        ballSpeedY *= -1;
+    //Right
+    if (ballX >= ballRangeLimitX)
+        ballSpeedX *= -1;
+    //Bottom
+    if (ballY >= ballRangeLimitY)
+        ballSpeedY *= -1;
 }
 
