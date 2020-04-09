@@ -97,10 +97,18 @@ function drawPaddle() {
 }
 
 function drawBall() {
+    updateBallDirectionForPaddle();
+    updateBallDirectionForEdgeOfScreen();
 
+    ballX += ballSpeedX;
+    ballY += ballSpeedY;
+    ctx.fillStyle = 'red';
+    ctx.fillRect(ballX, ballY, ballWidth, ballHeight);
+}
+
+function updateBallDirectionForPaddle() {
     var paddleLeftEdge = paddleX;
     var paddleRightEdge = paddleX + paddleWidth - ballWidth;
-
     if (ballY >= paddleY - ballHeight) {
         if (ballX >= paddleLeftEdge
             && ballX <= paddleRightEdge) {
@@ -108,13 +116,6 @@ function drawBall() {
             ballSpeedY *= -1;
         }
     }
-
-    updateBallDirectionForEdgeOfScreen();
-    
-    ballX += ballSpeedX;
-    ballY += ballSpeedY;
-    ctx.fillStyle = 'red';
-    ctx.fillRect(ballX, ballY, ballWidth, ballHeight);
 }
 
 function updateBallDirectionForEdgeOfScreen() {
