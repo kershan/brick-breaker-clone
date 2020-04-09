@@ -14,6 +14,8 @@ var ballSpeedX = -ballSpeed;
 var ballSpeedY = -ballSpeed;
 var ballWidth = 20;
 var ballHeight = 20;
+var ballRangeLimitX;
+var ballRangeLimitY;
 var ballX;
 var ballY;
 
@@ -29,6 +31,9 @@ window.onload = function () {
 }
 
 function setNewScreen() {
+    ballRangeLimitX = canvas.width - ballWidth;
+    ballRangeLimitY = canvas.height - ballHeight;
+
     //Paddle start position
     paddleX = canvas.width / 2 - (paddleWidth / 2);
     paddleY = canvas.height - paddleHeight;
@@ -101,11 +106,11 @@ function drawBall() {
         ballSpeedY *= -1;
 
     //Right
-    if (ballX >= canvas.width)
+    if (ballX >= ballRangeLimitX)
         ballSpeedX *= -1;
 
     //Bottom
-    if (ballY >= canvas.height)
+    if (ballY >= ballRangeLimitY)
         ballSpeedY *= -1;
 
 
