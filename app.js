@@ -70,7 +70,7 @@ function keyDownEvent(event) {
         }
         case 39: {
             //Right
-            if (paddleX >= canvas.width)
+            if (paddleX + paddleWidth >= canvas.width)
                 return;
 
             paddleX += paddleSpeed;
