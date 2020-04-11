@@ -66,11 +66,9 @@ function generateBricks() {
     let brickX = brickWallStart
     let brickY = canvas.height / 2;
 
-    bricks.push([brickX, brickY]);
-
-    for (var i = 0; i <= 3; i++) {
-        brickX += (brickWidth + brickSpacing);
+    for (var i = 0; i <= 4; i++) {
         bricks.push([brickX, brickY]);
+        brickX += (brickWidth + brickSpacing);
     }
 
 }
