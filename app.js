@@ -155,7 +155,11 @@ function updateBallDirectionForEdgeOfScreen() {
         ballSpeedX *= -1;
     //Bottom
     if (ballY >= ballRangeLimitY)
-        ballSpeedY *= -1;
+        gameOver();
+}
+
+function gameOver() {
+    setNewScreen();
 }
 
 function updateBallDirectionForBrick() {
