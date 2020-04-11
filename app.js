@@ -25,6 +25,7 @@ var ballPaddleDirectionX = true;
 const brickWidth = 40;
 const brickHeight = 20;
 var bricks = [];
+const brickSpacing = 5;
 
 window.onload = function () {
     canvas = document.getElementById('canvas');
@@ -52,7 +53,9 @@ function setNewScreen() {
     //Bricks generation
     let firstBrickX = canvas.width / 2 - brickHeight;
     let firstBrickY = canvas.height / 2;
-    bricks = [[firstBrickX, firstBrickY]]
+    let secondBrickX = firstBrickX + brickWidth + brickSpacing;
+    let secondBrickY = canvas.height / 2;
+    bricks = [[firstBrickX, firstBrickY], [secondBrickX, secondBrickY]]
 
     clearScreen();
 }
@@ -153,6 +156,11 @@ function updateBallDirectionForEdgeOfScreen() {
 
 function drawBrick() {
     ctx.fillStyle = 'pink';
-    ctx.fillRect(bricks[0][0], bricks[0][1], brickWidth, brickHeight);
+
+    bricks.forEach(function (item) {
+        ctx.fillRect(item[0], item[1], brickWidth, brickHeight);
+    });
+
+
 }
 
