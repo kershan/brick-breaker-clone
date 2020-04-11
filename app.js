@@ -21,6 +21,8 @@ var ballX;
 var ballY;
 
 //Brick
+//const brickWallStart = canvas.width / 2 - (brickWidth * 2 + (brickWidth / 2) + (brickSpacing * 2));
+const brickWallStart = 210;
 const brickWidth = 40;
 const brickHeight = 20;
 var bricks = [];
@@ -61,11 +63,16 @@ function clearScreen() {
 }
 
 function generateBricks() {
-    let firstBrickX = canvas.width / 2 - brickWidth;
-    let firstBrickY = canvas.height / 2;
-    let secondBrickX = firstBrickX + brickWidth + brickSpacing;
-    let secondBrickY = canvas.height / 2;
-    bricks = [[firstBrickX, firstBrickY], [secondBrickX, secondBrickY]];
+    let brickX = brickWallStart
+    let brickY = canvas.height / 2;
+
+    bricks.push([brickX, brickY]);
+    
+    for(var i = 0; i <= 3; i++) {
+        brickX += (brickWidth + brickSpacing);
+        bricks.push([brickX, brickY]);
+    }
+
 }
 
 function keyDownEvent(event) {
