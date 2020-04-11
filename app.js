@@ -51,11 +51,7 @@ function setNewScreen() {
     ballY = canvas.height - ballHeight - paddleHeight - ballStartOffset;
 
     //Bricks generation
-    let firstBrickX = canvas.width / 2 - brickHeight;
-    let firstBrickY = canvas.height / 2;
-    let secondBrickX = firstBrickX + brickWidth + brickSpacing;
-    let secondBrickY = canvas.height / 2;
-    bricks = [[firstBrickX, firstBrickY], [secondBrickX, secondBrickY]]
+    generateBricks();
 
     clearScreen();
 }
@@ -63,6 +59,14 @@ function setNewScreen() {
 function clearScreen() {
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+function generateBricks() {
+    let firstBrickX = canvas.width / 2 - brickWidth;
+    let firstBrickY = canvas.height / 2;
+    let secondBrickX = firstBrickX + brickWidth + brickSpacing;
+    let secondBrickY = canvas.height / 2;
+    bricks = [[firstBrickX, firstBrickY], [secondBrickX, secondBrickY]];
 }
 
 function keyDownEvent(event) {
