@@ -25,8 +25,8 @@ var ballY;
 const brickWallStart = 210;
 const brickWidth = 40;
 const brickHeight = 20;
-var bricks = [];
 const brickSpacing = 5;
+var bricks = [];
 
 window.onload = function () {
     canvas = document.getElementById('canvas');
@@ -67,8 +67,8 @@ function generateBricks() {
     let brickY = canvas.height / 2;
 
     bricks.push([brickX, brickY]);
-    
-    for(var i = 0; i <= 3; i++) {
+
+    for (var i = 0; i <= 3; i++) {
         brickX += (brickWidth + brickSpacing);
         bricks.push([brickX, brickY]);
     }
@@ -124,6 +124,7 @@ function drawPaddle() {
 function drawBall() {
     updateBallDirectionForPaddle();
     updateBallDirectionForEdgeOfScreen();
+    updateBallDirectionForBrick();
 
     ballX += ballSpeedX;
     ballY += ballSpeedY;
@@ -132,8 +133,8 @@ function drawBall() {
 }
 
 function updateBallDirectionForPaddle() {
-    var paddleLeftEdge = paddleX;
-    var paddleRightEdge = paddleX + paddleWidth - ballWidth;
+    let paddleLeftEdge = paddleX;
+    let paddleRightEdge = paddleX + paddleWidth - ballWidth;
     if (ballY >= paddleY - ballHeight) {
         if (ballX >= paddleLeftEdge
             && ballX <= paddleRightEdge) {
@@ -155,6 +156,20 @@ function updateBallDirectionForEdgeOfScreen() {
     //Bottom
     if (ballY >= ballRangeLimitY)
         ballSpeedY *= -1;
+}
+
+function updateBallDirectionForBrick() {
+    bricks.forEach(function (item) {
+        let firstBrickLeftEdge = item[0];
+        let firstBrickRightEdge = firstBrickLeftEdge + brickWidth - ballWidth;
+        if (ballY <= item[1] + brickHeight
+            && ballY >= item[1] - ballHeight) {
+            if (ballX >= firstBrickLeftEdge
+                && ballX <= firstBrickRightEdge) {
+                ballSpeedY *= -1;
+            }
+        }
+    });
 }
 
 function drawBrick() {
