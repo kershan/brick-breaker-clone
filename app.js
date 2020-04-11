@@ -9,7 +9,7 @@ var paddleX;
 var paddleY;
 
 //Ball
-const ballSpeed = 1;
+const ballSpeed = 2;
 const ballStartOffset = 1;
 var ballSpeedX = -ballSpeed;
 var ballSpeedY = -ballSpeed;
@@ -19,7 +19,6 @@ var ballRangeLimitX;
 var ballRangeLimitY;
 var ballX;
 var ballY;
-var ballPaddleDirectionX = true;
 
 //Brick
 const brickWidth = 40;
@@ -119,11 +118,7 @@ function drawBall() {
     updateBallDirectionForPaddle();
     updateBallDirectionForEdgeOfScreen();
 
-    if (ballPaddleDirectionX)
-        ballX += ballSpeedX;
-    else
-        ballX -= ballSpeedX;
-
+    ballX += ballSpeedX;
     ballY += ballSpeedY;
     ctx.fillStyle = 'red';
     ctx.fillRect(ballX, ballY, ballWidth, ballHeight);
@@ -135,10 +130,7 @@ function updateBallDirectionForPaddle() {
     if (ballY >= paddleY - ballHeight) {
         if (ballX >= paddleLeftEdge
             && ballX <= paddleRightEdge) {
-            ballSpeedX *= -1;
             ballSpeedY *= -1;
-
-            ballPaddleDirectionX = !ballPaddleDirectionX
         }
     }
 }
