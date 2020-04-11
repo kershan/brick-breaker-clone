@@ -2,7 +2,7 @@ var canvas;
 var ctx;
 
 //Paddle
-const paddleSpeed = 10;
+const paddleSpeed = 20;
 const paddleHeight = 20;
 var paddleWidth = 80;
 var paddleX;
@@ -26,7 +26,7 @@ const brickWallStart = 210;
 const brickWidth = 40;
 const brickHeight = 20;
 const brickSpacing = 5;
-var bricks = [];
+var bricks = new Map();
 
 window.onload = function () {
     canvas = document.getElementById('canvas');
@@ -67,7 +67,7 @@ function generateBricks() {
     let brickY = canvas.height / 2;
 
     for (var i = 0; i <= 4; i++) {
-        bricks.push([brickX, brickY]);
+        bricks.set(i, [brickX, brickY]);
         brickX += (brickWidth + brickSpacing);
     }
 
@@ -161,7 +161,7 @@ function gameOver() {
 }
 
 function updateBallDirectionForBrick() {
-    bricks.forEach(function (item) {
+    bricks.forEach(function (item, key) {
         let firstBrickLeftEdge = item[0];
         let firstBrickRightEdge = firstBrickLeftEdge + brickWidth - ballWidth;
         if (ballY <= item[1] + brickHeight
