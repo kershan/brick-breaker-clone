@@ -169,6 +169,7 @@ function updateBallDirectionForBrick() {
             if (ballX >= firstBrickLeftEdge
                 && ballX <= firstBrickRightEdge) {
                 ballSpeedY *= -1;
+                bricks.delete(key);
             }
         }
     });
