@@ -2,11 +2,13 @@ var canvas;
 var ctx;
 
 //Paddle
-const paddleSpeed = 20;
+const paddleSpeed = 5;
 const paddleHeight = 20;
 var paddleWidth = 80;
 var paddleX;
 var paddleY;
+var paddleMoveLeft = false;
+var paddleMoveRight = false;
 
 //Ball
 const ballSpeed = 2;
@@ -35,11 +37,15 @@ window.onload = function () {
     setNewScreen();
 
     addEventListener("keydown", keyDownEvent);
+    addEventListener("keyup", keyUpEvent);
 
     requestAnimationFrame(gameUpdate);
 }
 
 function setNewScreen() {
+    paddleMoveLeft = false;
+    paddleMoveRight = false;
+
     ballRangeLimitX = canvas.width - ballWidth;
     ballRangeLimitY = canvas.height - ballHeight;
 
@@ -81,11 +87,7 @@ function keyDownEvent(event) {
     switch (event.keyCode) {
         case 37: {
             //Left
-            if (paddleX <= 0)
-                return;
-
-            paddleX -= paddleSpeed;
-            break;
+            paddleMoveLeft = true;
         }
         case 38: {
             //Up
@@ -93,11 +95,32 @@ function keyDownEvent(event) {
         }
         case 39: {
             //Right
-            if (paddleX + paddleWidth >= canvas.width)
-                return;
-
-            paddleX += paddleSpeed;
+            paddleMoveRight = true;
+        }
+        case 40: {
+            //Down
             break;
+        }
+    }
+}
+
+function keyUpEvent(event) {
+    if (event.isComposing || event.keyCode === 229) {
+        return;
+    }
+
+    switch (event.keyCode) {
+        case 37: {
+            //Left
+            paddleMoveLeft = false;
+        }
+        case 38: {
+            //Up
+            break;
+        }
+        case 39: {
+            //Right
+            paddleMoveRight = false;
         }
         case 40: {
             //Down
@@ -121,6 +144,12 @@ function checkForVictory() {
 }
 
 function drawPaddle() {
+    if (paddleMoveLeft && paddleX >= 0)
+        paddleX -= paddleSpeed;
+    else if (paddleMoveRight && paddleX + paddleWidth <= canvas.width)
+        paddleX += paddleSpeed;
+
+
     ctx.fillStyle = 'green';
     ctx.fillRect(paddleX, paddleY, paddleWidth, paddleHeight);
 }
