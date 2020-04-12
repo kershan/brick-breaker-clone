@@ -203,10 +203,14 @@ function gameOver() {
 
 function updateBallDirectionForBrick() {
     bricks.forEach(function (item, key) {
-        if (ballY <= item[1] + brickHeight
-            && ballY >= item[1] - ballHeight
-            && ballX >= item[0]
-            && ballX + ballWidth <= item[0] + brickWidth) {
+        if ((ballX + ballWidth <= item[0] + brickWidth
+            && ballX + ballWidth >= item[0]
+            && ballY + ballHeight <= item[1] + brickHeight
+            && ballY + ballHeight >= item[1])
+            || (ballX >= item[0]
+                && ballX <= item[0] + brickWidth
+                && ballY >= item[1]
+                && ballY <= item[1] + brickHeight)) {
             ballSpeedY *= -1;
             bricks.delete(key);
         }
