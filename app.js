@@ -9,6 +9,7 @@ var paddleX;
 var paddleY;
 var paddleMoveLeft = false;
 var paddleMoveRight = false;
+var paddleBounced = false;
 
 //Ball
 const ballSpeed = 2;
@@ -155,30 +156,30 @@ function drawPaddle() {
 }
 
 function drawBall() {
-    updateBallDirectionForPaddle();
+    paddleBounced = updateBallDirectionForPaddle();
     updateBallDirectionForEdgeOfScreen();
     updateBallDirectionForBrick();
 
     ballX += ballSpeedX;
     ballY += ballSpeedY;
+
     ctx.fillStyle = 'red';
     ctx.fillRect(ballX, ballY, ballWidth, ballHeight);
 }
 
 function updateBallDirectionForPaddle() {
-    let paddleLeftEdge = paddleX;
-    let paddleRightEdge = paddleX + paddleWidth;
+    const paddleLeftEdge = paddleX;
+    const paddleRightEdge = paddleX + paddleWidth;
 
-    let ballTopLeft = [ballX, ballY];
-    let ballTopRight = [ballX + ballWidth, ballY];
-    let ballBottomLeft = [ballX, ballY + ballHeight];
-    let ballBottomRight = [ballX + ballWidth, ballY + ballHeight];
-
-    if ((ballBottomLeft[0] >= paddleLeftEdge
-        && ballBottomLeft[1] >= paddleY)
-        || (ballBottomRight[0] >= paddleRightEdge
-            && ballBottomRight[1] >= paddleY))
+    if (ballY + ballHeight >= paddleY
+        && (ballX >= paddleLeftEdge)
+        && (ballX + ballWidth <= paddleRightEdge)) {
+        if (!paddleBounced) {
             ballSpeedY *= -1;
+        }
+        return true;
+    }
+    return false;
 }
 
 function updateBallDirectionForEdgeOfScreen() {
@@ -202,15 +203,12 @@ function gameOver() {
 
 function updateBallDirectionForBrick() {
     bricks.forEach(function (item, key) {
-        let firstBrickLeftEdge = item[0];
-        let firstBrickRightEdge = firstBrickLeftEdge + brickWidth - ballWidth;
         if (ballY <= item[1] + brickHeight
-            && ballY >= item[1] - ballHeight) {
-            if (ballX >= firstBrickLeftEdge
-                && ballX <= firstBrickRightEdge) {
-                ballSpeedY *= -1;
-                bricks.delete(key);
-            }
+            && ballY >= item[1] - ballHeight
+            && ballX >= item[0]
+            && ballX + ballWidth <= item[0] + brickWidth) {
+            ballSpeedY *= -1;
+            bricks.delete(key);
         }
     });
 }
