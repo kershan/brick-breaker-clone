@@ -111,7 +111,13 @@ function gameUpdate() {
     drawPaddle();
     drawBrick();
     drawBall();
+    checkForVictory();
     requestAnimationFrame(gameUpdate);
+}
+
+function checkForVictory() {
+    if (bricks.size == 0)
+        setNewScreen();
 }
 
 function drawPaddle() {
@@ -181,7 +187,5 @@ function drawBrick() {
     bricks.forEach(function (item) {
         ctx.fillRect(item[0], item[1], brickWidth, brickHeight);
     });
-
-
 }
 
