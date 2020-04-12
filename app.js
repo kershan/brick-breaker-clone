@@ -168,17 +168,24 @@ function drawBall() {
 }
 
 function updateBallDirectionForPaddle() {
-    const paddleLeftEdge = paddleX;
-    const paddleRightEdge = paddleX + paddleWidth;
-
-    if (ballY + ballHeight >= paddleY
-        && (ballX >= paddleLeftEdge)
-        && (ballX + ballWidth <= paddleRightEdge)) {
+    if ((ballX + ballWidth <= paddleX + paddleWidth
+        && ballX + ballWidth >= paddleX
+        && ballY + ballHeight <= paddleY + paddleHeight
+        && ballY + ballHeight >= paddleY)
+        || (ballX >= paddleX
+            && ballX <= paddleX + paddleWidth
+            && ballY >= paddleY
+            && ballY <= paddleY + paddleHeight)) {
         if (!paddleBounced) {
             ballSpeedY *= -1;
         }
         return true;
     }
+
+    // ballY + ballHeight >= paddleY
+    // && (ballX >= paddleLeftEdge)
+    // && (ballX + ballWidth <= paddleRightEdge)
+
     return false;
 }
 
