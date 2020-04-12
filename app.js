@@ -168,14 +168,7 @@ function drawBall() {
 }
 
 function updateBallDirectionForPaddle() {
-    if ((ballX + ballWidth <= paddleX + paddleWidth
-        && ballX + ballWidth >= paddleX
-        && ballY + ballHeight <= paddleY + paddleHeight
-        && ballY + ballHeight >= paddleY)
-        || (ballX >= paddleX
-            && ballX <= paddleX + paddleWidth
-            && ballY >= paddleY
-            && ballY <= paddleY + paddleHeight)) {
+    if (checkForBallCollision(paddleX, paddleY, paddleWidth, paddleHeight)) {
         if (!paddleBounced) {
             ballSpeedY *= -1;
         }
@@ -206,18 +199,22 @@ function gameOver() {
 
 function updateBallDirectionForBrick() {
     bricks.forEach(function (item, key) {
-        if ((ballX + ballWidth <= item[0] + brickWidth
-            && ballX + ballWidth >= item[0]
-            && ballY + ballHeight <= item[1] + brickHeight
-            && ballY + ballHeight >= item[1])
-            || (ballX >= item[0]
-                && ballX <= item[0] + brickWidth
-                && ballY >= item[1]
-                && ballY <= item[1] + brickHeight)) {
+        if (checkForBallCollision(item[0], item[1], brickWidth, brickHeight)) {
             ballSpeedY *= -1;
             bricks.delete(key);
         }
     });
+}
+
+function checkForBallCollision(itemX, itemY, itemWidth, itemHeight) {
+    return ((ballX >= itemX
+        && ballX <= itemX + itemWidth
+        && ballY >= itemY
+        && ballY <= itemY + itemHeight)
+        || (ballX + ballWidth <= itemX + itemWidth
+            && ballX + ballWidth >= itemX
+            && ballY + ballHeight <= itemY + itemHeight
+            && ballY + ballHeight >= itemY));
 }
 
 function drawBrick() {
