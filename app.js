@@ -167,13 +167,18 @@ function drawBall() {
 
 function updateBallDirectionForPaddle() {
     let paddleLeftEdge = paddleX;
-    let paddleRightEdge = paddleX + paddleWidth - ballWidth;
-    if (ballY >= paddleY - ballHeight) {
-        if (ballX >= paddleLeftEdge
-            && ballX <= paddleRightEdge) {
+    let paddleRightEdge = paddleX + paddleWidth;
+
+    let ballTopLeft = [ballX, ballY];
+    let ballTopRight = [ballX + ballWidth, ballY];
+    let ballBottomLeft = [ballX, ballY + ballHeight];
+    let ballBottomRight = [ballX + ballWidth, ballY + ballHeight];
+
+    if ((ballBottomLeft[0] >= paddleLeftEdge
+        && ballBottomLeft[1] >= paddleY)
+        || (ballBottomRight[0] >= paddleRightEdge
+            && ballBottomRight[1] >= paddleY))
             ballSpeedY *= -1;
-        }
-    }
 }
 
 function updateBallDirectionForEdgeOfScreen() {
