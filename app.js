@@ -15,7 +15,7 @@ var paddleMoveRight = false;
 var paddleBounced = false;
 
 //Ball
-const ballSpeed = 2;
+const ballSpeed = 4;
 const ballStartOffset = 1;
 var ballSpeedX = -ballSpeed;
 var ballSpeedY = -ballSpeed;
@@ -137,13 +137,33 @@ function keyUpEvent(event) {
     }
 }
 
-function gameUpdate() {
-    clearScreen();
-    drawPaddle();
-    drawBrick();
-    drawBall();
-    checkForVictory();
+var gameTime = 0;
+
+function gameUpdate(timestamp) {
+    if (timestamp - 10 >= gameTime) {
+        clearScreen();
+        drawPaddle();
+        drawBrick();
+        drawBall();
+        checkForVictory();
+        gameTime = timestamp;
+        showFPSToConsole();
+    }
+
     requestAnimationFrame(gameUpdate);
+}
+
+// https://www.growingwiththeweb.com/2017/12/fast-simple-js-fps-counter.html
+const times = [];
+let fps;
+function showFPSToConsole() {
+    const now = performance.now();
+    while (times.length > 0 && times[0] <= now - 1000) {
+        times.shift();
+    }
+    times.push(now);
+    fps = times.length;
+    console.log("FPS: " + fps);
 }
 
 function checkForVictory() {
