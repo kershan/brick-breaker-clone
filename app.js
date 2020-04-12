@@ -182,10 +182,6 @@ function updateBallDirectionForPaddle() {
         return true;
     }
 
-    // ballY + ballHeight >= paddleY
-    // && (ballX >= paddleLeftEdge)
-    // && (ballX + ballWidth <= paddleRightEdge)
-
     return false;
 }
 
