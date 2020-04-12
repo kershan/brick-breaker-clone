@@ -1,6 +1,9 @@
 var canvas;
 var ctx;
 
+//Game State
+var level = 1;
+
 //Paddle
 const paddleSpeed = 5;
 const paddleHeight = 20;
@@ -73,7 +76,7 @@ function generateBricks() {
     let brickY = canvas.height / 2;
     let index = 0;
 
-    for (var j = 0; j <= 0; j++) {
+    for (var j = 0; j <= level; j++) {
         let brickX = brickWallStart
         for (var i = 0; i <= 4; i++) {
             bricks.set(index, [brickX, brickY]);
@@ -144,8 +147,12 @@ function gameUpdate() {
 }
 
 function checkForVictory() {
-    if (bricks.size == 0)
+    if (bricks.size == 0) {
+        level++;
+        if (level == 5)
+            level = 0;
         setNewScreen();
+    }
 }
 
 function drawPaddle() {
