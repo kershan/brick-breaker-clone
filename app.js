@@ -70,14 +70,18 @@ function clearScreen() {
 }
 
 function generateBricks() {
-    let brickX = brickWallStart
     let brickY = canvas.height / 2;
+    let index = 0;
 
-    for (var i = 0; i <= 4; i++) {
-        bricks.set(i, [brickX, brickY]);
-        brickX += (brickWidth + brickSpacing);
+    for (var j = 0; j <= 0; j++) {
+        let brickX = brickWallStart
+        for (var i = 0; i <= 4; i++) {
+            bricks.set(index, [brickX, brickY]);
+            brickX += (brickWidth + brickSpacing);
+            index++;
+        }
+        brickY -= (brickHeight + brickSpacing);
     }
-
 }
 
 function keyDownEvent(event) {
