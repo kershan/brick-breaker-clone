@@ -204,10 +204,21 @@ function gameOver() {
 function updateBallDirectionForBrick() {
     bricks.forEach(function (item, key) {
         if (checkForBallCollision(item[0], item[1], brickWidth, brickHeight)) {
-            ballSpeedY *= -1;
+            if (checkForBallCollisionForOuterSides(item[0], brickWidth)) {
+                ballSpeedX *= -1;
+            } else {
+                ballSpeedY *= -1;
+            }
             bricks.delete(key);
         }
     });
+}
+
+function checkForBallCollisionForOuterSides(itemX, itemWidth) {
+    return (ballX <= itemX + itemWidth
+        && ballX + ballWidth >= itemX + itemWidth)
+        || (ballX + ballWidth >= itemX
+            && ballX <= itemX);
 }
 
 function checkForBallCollision(itemX, itemY, itemWidth, itemHeight) {
