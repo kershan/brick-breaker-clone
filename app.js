@@ -183,6 +183,7 @@ function showFPSCounter() {
     times.push(now);
     fps = times.length;
     ctx.fillStyle = "white";
+    ctx.font = "12px serif";
     ctx.fillText("FPS: " + fps, fpsDiplayOffset, 10);
 }
 
