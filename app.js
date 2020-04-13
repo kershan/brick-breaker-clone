@@ -3,6 +3,9 @@ var ctx;
 
 //Game State
 var level = 1;
+var gameTime = 0;
+const gameOverText = "GAME OVER!";
+const retryButtonText = "Click anywhere to try again.";
 
 //Paddle
 const paddleSpeed = 5;
@@ -52,6 +55,8 @@ window.onload = function () {
 }
 
 function setNewScreen() {
+    removeEventListener("click", mouseClickEvent);
+
     paddleMoveLeft = false;
     paddleMoveRight = false;
 
@@ -144,7 +149,9 @@ function keyUpEvent(event) {
     }
 }
 
-var gameTime = 0;
+function mouseClickEvent(event) {
+    setNewScreen();
+}
 
 function gameUpdate(timestamp) {
     if (timestamp - 10 >= gameTime) {
@@ -204,6 +211,14 @@ function drawBall() {
     ctx.fillRect(ballX, ballY, ballWidth, ballHeight);
 }
 
+function drawBrick() {
+    ctx.fillStyle = 'pink';
+
+    bricks.forEach(function (item) {
+        ctx.fillRect(item[0], item[1], brickWidth, brickHeight);
+    });
+}
+
 function updateBallDirectionForPaddle() {
     if (checkForBallCollision(paddleX, paddleY, paddleWidth, paddleHeight)) {
         if (!paddleBounced) {
@@ -228,10 +243,6 @@ function updateBallDirectionForEdgeOfScreen() {
     //Bottom
     if (ballY >= ballRangeLimitY)
         gameOver();
-}
-
-function gameOver() {
-    setNewScreen();
 }
 
 function updateBallDirectionForBrick() {
@@ -265,11 +276,29 @@ function checkForBallCollision(itemX, itemY, itemWidth, itemHeight) {
             && ballY + ballHeight >= itemY));
 }
 
-function drawBrick() {
-    ctx.fillStyle = 'pink';
+function gameOver() {
+    addEventListener("click", mouseClickEvent);
+    showGameOverText();
+    showRetryButtonText();
+}
 
-    bricks.forEach(function (item) {
-        ctx.fillRect(item[0], item[1], brickWidth, brickHeight);
-    });
+function showRetryButtonText() {
+    ctx.fillStyle = "red";
+    ctx.font = "24px serif";
+    let textMetrics = ctx.measureText(retryButtonText);
+    let textLength = textMetrics.actualBoundingBoxLeft
+        + textMetrics.actualBoundingBoxRight;
+    let textX = (canvas.width / 2) - (textLength / 2);
+    ctx.fillText(retryButtonText, textX, 140);
+}
+
+function showGameOverText() {
+    ctx.fillStyle = "red";
+    ctx.font = "48px serif";
+    let textMetrics = ctx.measureText(gameOverText);
+    let textLength = textMetrics.actualBoundingBoxLeft
+        + textMetrics.actualBoundingBoxRight;
+    let textX = (canvas.width / 2) - (textLength / 2);
+    ctx.fillText(gameOverText, textX, 80);
 }
 
