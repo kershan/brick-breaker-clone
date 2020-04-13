@@ -34,6 +34,11 @@ const brickHeight = 20;
 const brickSpacing = 5;
 var bricks = new Map();
 
+//FPS
+var fpsDiplayOffset;
+const times = [];
+let fps;
+
 window.onload = function () {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
@@ -60,6 +65,8 @@ function setNewScreen() {
     //Ball start position
     ballX = canvas.width / 2 - (ballWidth / 2);
     ballY = canvas.height - ballHeight - paddleHeight - ballStartOffset;
+
+    fpsDiplayOffset = canvas.width - 45;
 
     //Bricks generation
     generateBricks();
@@ -147,23 +154,22 @@ function gameUpdate(timestamp) {
         drawBall();
         checkForVictory();
         gameTime = timestamp;
-        showFPSToConsole();
+        showFPSCounter();
     }
 
     requestAnimationFrame(gameUpdate);
 }
 
 // https://www.growingwiththeweb.com/2017/12/fast-simple-js-fps-counter.html
-const times = [];
-let fps;
-function showFPSToConsole() {
+function showFPSCounter() {
     const now = performance.now();
     while (times.length > 0 && times[0] <= now - 1000) {
         times.shift();
     }
     times.push(now);
     fps = times.length;
-    console.log("FPS: " + fps);
+    ctx.fillStyle = "white";
+    ctx.fillText("FPS: " + fps, fpsDiplayOffset, 10);
 }
 
 function checkForVictory() {
