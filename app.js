@@ -4,8 +4,11 @@ var ctx;
 //Game State
 var level = 1;
 var gameTime = 0;
+var gamePlaying = false;
 const gameOverText = "GAME OVER!";
 const retryButtonText = "Click anywhere to try again.";
+const titleText = "Brick Breaker Clone";
+const startButtonText = "Click anywhere to start.";
 
 //Paddle
 const paddleSpeed = 5;
@@ -46,16 +49,19 @@ window.onload = function () {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
 
-    setNewScreen();
-
     addEventListener("keydown", keyDownEvent);
     addEventListener("keyup", keyUpEvent);
 
-    requestAnimationFrame(gameUpdate);
+    clearScreen();
+    showStartScreen();
 }
 
 function setNewScreen() {
     removeEventListener("click", mouseClickEvent);
+
+    clearScreen();
+
+    gamePlaying = true;
 
     paddleMoveLeft = false;
     paddleMoveRight = false;
@@ -76,7 +82,7 @@ function setNewScreen() {
     //Bricks generation
     generateBricks();
 
-    clearScreen();
+    requestAnimationFrame(gameUpdate);
 }
 
 function clearScreen() {
@@ -150,7 +156,8 @@ function keyUpEvent(event) {
 }
 
 function mouseClickEvent(event) {
-    setNewScreen();
+    if (!gamePlaying)
+        setNewScreen();
 }
 
 function gameUpdate(timestamp) {
@@ -276,7 +283,34 @@ function checkForBallCollision(itemX, itemY, itemWidth, itemHeight) {
             && ballY + ballHeight >= itemY));
 }
 
+function showStartScreen() {
+    addEventListener("click", mouseClickEvent);
+    showTitle();
+    showStartButtonText();
+}
+
+function showTitle() {
+    ctx.fillStyle = "red";
+    ctx.font = "48px serif";
+    let textMetrics = ctx.measureText(titleText);
+    let textLength = textMetrics.actualBoundingBoxLeft
+        + textMetrics.actualBoundingBoxRight;
+    let textX = (canvas.width / 2) - (textLength / 2);
+    ctx.fillText(titleText, textX, 80);
+}
+
+function showStartButtonText() {
+    ctx.fillStyle = "red";
+    ctx.font = "24px serif";
+    let textMetrics = ctx.measureText(startButtonText);
+    let textLength = textMetrics.actualBoundingBoxLeft
+        + textMetrics.actualBoundingBoxRight;
+    let textX = (canvas.width / 2) - (textLength / 2);
+    ctx.fillText(startButtonText, textX, 140);
+}
+
 function gameOver() {
+    gamePlaying = false;
     addEventListener("click", mouseClickEvent);
     showGameOverText();
     showRetryButtonText();
